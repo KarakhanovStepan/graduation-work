@@ -2,6 +2,7 @@ package ru.home.main.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -35,6 +36,13 @@ public class Post
 
     @Column(name = "view_count", nullable = false)
     private int viewCount;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tag2post",
+        joinColumns = {@JoinColumn(name = "post_id")},
+        inverseJoinColumns = {@JoinColumn(name = "tag_id")}
+        )
+    private List<Tag> tags;
 
     public int getId() {
         return id;
@@ -106,5 +114,13 @@ public class Post
 
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }
