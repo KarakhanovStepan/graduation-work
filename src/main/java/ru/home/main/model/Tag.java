@@ -1,9 +1,12 @@
 package ru.home.main.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "tags")
+@Data
 public class Tag
 {
     @Id
@@ -11,21 +14,5 @@ public class Tag
     private int id;
 
     @Column(nullable = false)
-    private String nsme;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNsme() {
-        return nsme;
-    }
-
-    public void setNsme(String nsme) {
-        this.nsme = nsme;
-    }
+    private String name;
 }

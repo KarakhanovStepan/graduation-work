@@ -1,11 +1,14 @@
 package ru.home.main.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "posts")
+@Data
 public class Post
 {
     @Id
@@ -22,8 +25,9 @@ public class Post
     @Column(name = "moderator_id")
     private int moderatorID;
 
-    @Column(name = "user_id", nullable = false)
-    private int userId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private Date time;
@@ -37,90 +41,16 @@ public class Post
     @Column(name = "view_count", nullable = false)
     private int viewCount;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
+    private List<PostComment> postComments;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
+    private List<PostVote> postVotes;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "tag2post",
         joinColumns = {@JoinColumn(name = "post_id")},
         inverseJoinColumns = {@JoinColumn(name = "tag_id")}
         )
     private List<Tag> tags;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public PostModerationStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(PostModerationStatus status) {
-        this.status = status;
-    }
-
-    public int getModeratorID() {
-        return moderatorID;
-    }
-
-    public void setModeratorID(int moderatorID) {
-        this.moderatorID = moderatorID;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
 }

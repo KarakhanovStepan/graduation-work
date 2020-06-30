@@ -1,9 +1,12 @@
 package ru.home.main.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "tag2post")
+@Data
 public class Tag2Post
 {
     @Id
@@ -15,28 +18,4 @@ public class Tag2Post
 
     @Column(name = "tag_id", nullable = false)
     private int tagId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
-
-    public int getTagId() {
-        return tagId;
-    }
-
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
-    }
 }
